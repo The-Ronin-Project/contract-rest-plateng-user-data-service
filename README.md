@@ -1,6 +1,6 @@
-# Template Project for REST Contracts
+# REST Contract for Platform-Engineering User Data Service
 
-This repo contains an example of a REST contract repository, to be used as a template repository in GitHub.
+This repo contains the rest contract for `plateng-user-data-service`
 
 # Tools
 
@@ -18,10 +18,8 @@ The project looks like this:
 ├── build.gradle.kts                           Gradle build script
 ├── settings.gradle.kts                        Gradle build settings script
 └── v1
-    └── ronin-contract-rest-template.json
+    └── plateng-user-data-service.json
 ```
-
-Change the `rootProject.name` value in [settings.gradle.kts](settings.gradle.kts) to reflect what you want your deployed artifact ID to be.
 
 Replace [ronin-contract-rest-template.json](v1%2Fronin-contract-rest-template.json) with your OpenAPI spec.  You may break up using references to other local files so long as they are
 contained inside the `v1` directory, but you should put them in sub-folders (e.g. `v1/schemas/<schema-name>.json`).  You should update the `info/version` value of your spec and keep it
