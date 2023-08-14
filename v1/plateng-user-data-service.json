@@ -429,7 +429,7 @@
                 ]
             }
         },
-        "tokens": {
+        "/tokens": {
             "post": {
                 "tags": [
                     "token"
@@ -549,7 +549,7 @@
                 ]
             }
         },
-        "tokens/{tokenId}": {
+        "/tokens/{tokenId}": {
             "delete": {
                 "tags": [
                     "token"

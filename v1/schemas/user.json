@@ -12,7 +12,7 @@
                 "type": "object",
                 "properties": {
                     "userId": {
-                        "$ref": "schemas/common-types.json#/components/schemas/UserId"
+                        "$ref": "common-types.json#/components/schemas/UserId"
                     },
                     "createdAt": {
                         "type": "string"
@@ -40,7 +40,7 @@
                 "type": "object",
                 "properties": {
                     "userId": {
-                        "$ref": "schemas/common-types.json#/components/schemas/UserId"
+                        "$ref": "common-types.json#/components/schemas/UserId"
                     },
                     "password": {
                         "type": "string",
