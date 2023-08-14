@@ -1,0 +1,88 @@
+{
+    "openapi": "3.0.2",
+    "paths": {},
+    "info": {
+        "title": "",
+        "version": ""
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "title": "User",
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "$ref": "schemas/common-types.json#/components/schemas/UserId"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    },
+                    "updatedBy": {
+                        "type": "string"
+                    },
+                    "deletedAt": {
+                        "type": "string",
+                        "description": "datetime of deletion, or NULL if not deleted"
+                    }
+                },
+                "required": [
+                    "userId"
+                ]
+            },
+            "CreateUserRequestBody": {
+                "title": "Input structure for creating or updating a User",
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "$ref": "schemas/common-types.json#/components/schemas/UserId"
+                    },
+                    "password": {
+                        "type": "string",
+                        "minLength": 10,
+                        "maxLength": 64
+                    }
+                },
+                "required": [
+                    "userId",
+                    "password"
+                ]
+            },
+            "ListOfUsers": {
+                "title": "List of Users",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/User"
+                }
+            },
+            "SaslCreds": {
+                "title": "Structure for returning SASL/SCRAM credentials",
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "salt": {
+                        "type": "string"
+                    },
+                    "iterations": {
+                        "type": "string"
+                    },
+                    "saltedPassword": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "salt",
+                    "iterations",
+                    "saltedPassword"
+                ]
+            }
+        }
+    }
+}

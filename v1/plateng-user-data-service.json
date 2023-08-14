@@ -22,9 +22,13 @@
             "description": "User for interacting with PlatEng services"
         },
         {
-            "name": "token",
-            "description": "Machine token for obtaining encrypted credentials",
+            "name": "credentials",
+            "description": "Returns credentials"
         },
+        {
+            "name": "token",
+            "description": "Machine token for obtaining encrypted credentials"
+        }
     ],
     "paths": {
         "/users": {
@@ -39,7 +43,6 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                /* TODO: Create schema */
                                 "$ref": "schemas/user.json#/components/schemas/CreateUserRequestBody"
                             }
                         }
@@ -48,11 +51,10 @@
                 },
                 "responses": {
                     "201": {
-                        "description": "Successfully created User.",
+                        "description": "Created. New User created or reactivated.",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    /* TODO: Create schema */
                                     "$ref": "schemas/user.json#/components/schemas/User"
                                 }
                             }
@@ -101,23 +103,590 @@
                 },
                 "security": [
                     {
-                        "seki": [
-                            
-                        ]
+                        "auth0": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "List users",
+                "description": "Lists users, optionally filtered by id_contains and is_deleted",
+                "operationId": "getUsers",
+                "parameters": [
+                    {
+                        "name": "id_contains",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "is_deleted",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok. User retrieved.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/user.json#/components/schemas/ListOfUsers"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
+                    }
+                ]
+            }
+        },
+        "/users/{userId}": {
+            "put": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update user",
+                "description": "Updates password for user",
+                "operationId": "updateUser",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/pathUserId"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "schemas/user.json#/components/schemas/CreateUserRequestBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok. Updated User.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/user.json#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found. No active user with this name exists.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Content. Request body contained invalid or malformed data.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Delete User",
+                "description": "Deletes a user",
+                "operationId": "deleteUser",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/pathUserId"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content. User deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found. No active user with this name exists.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user record",
+                "description": "Gets user record with the given id",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/pathUserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok. User retrieved.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/user.json#/components/schemas/ListOfUsers"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found. No active user with this name exists.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
+                    }
+                ]
+            }
+        },
+        "/users/{userId}/credentials": {
+            "get": {
+                "tags": [
+                    "user",
+                    "credentials"
+                ],
+                "summary": "Get user credentials",
+                "description": "Gets hashed credentials for the given user",
+                "operationId": "getUserCreds",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/pathUserId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok. Retreived credentials.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/user.json#/components/schemas/SaslCreds"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found. An active user with this name does not exist.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
+                    }
+                ]
+            }
+        },
+        "tokens": {
+            "post": {
+                "tags": [
+                    "token"
+                ],
+                "summary": "Create token",
+                "description": "Creates and returns a token",
+                "operationId": "createToken",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "schemas/token.json#/components/schemas/CreateTokenRequestBody"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created. New Token created.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/token.json#/components/schemas/Token"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "token"
+                ],
+                "summary": "List tokens",
+                "description": "List all tokens, optionally filtered by id_contains and is_deleted",
+                "operationId": "getTokens",
+                "parameters": [
+                    {
+                        "name": "id_contains",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "is_deleted",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok. Tokens retreived.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/token.json#/components/schemas/ListOfTokens"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
+                    }
+                ]
+            }
+        },
+        "tokens/{tokenId}": {
+            "delete": {
+                "tags": [
+                    "token"
+                ],
+                "summary": "Delete token",
+                "description": "Delete token matching tokenId",
+                "operationId": "deleteToken",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/pathTokenId"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No content. Token deleted."
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found. No active token exists with this id.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
+                    }
+                ]
+            },
+            "get": {
+                "tags": [
+                    "token"
+                ],
+                "summary": "Get token record",
+                "description": "Get token with exact id",
+                "operationId": "getTokenById",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/pathTokenId"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok. Token retrieved.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/token.json#/components/schemas/ListOfTokens"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized. Most likely no token sent. See response for details.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden. Authentication information sent does not allow caller to do this.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found. No active token exists with this id.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "schemas/common-types.json#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "auth0": []
                     }
                 ]
             }
         }
     },
-
     "components": {
         "securitySchemes": {
-            "securitySchemes": {
-                "seki": {
-                    "type": "http",
-                    "scheme": "bearer",
-                    "bearerFormat": "JWT"
-                }
+            "auth0": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "parameters": {
+            "pathUserId": {
+                "name": "userId",
+                "in": "path",
+                "schema": {"$ref": "schemas/common-types.json#/components/schemas/UserId"},
+                "example": "interops-example-service-prod",
+                "required": true
+            },
+            "pathTokenId": {
+                "name": "tokenId",
+                "in": "path",
+                "schema": {"$ref": "schemas/common-types.json#/components/schemas/TokenId"},
+                "example": "sdvlkjhse8wef9asdf1",
+                "required": true
             }
         }
     }

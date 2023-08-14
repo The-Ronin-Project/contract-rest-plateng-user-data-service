@@ -1,0 +1,64 @@
+{
+    "openapi": "3.0.2",
+    "paths": {},
+    "info": {
+        "title": "",
+        "version": ""
+    },
+    "components": {
+        "schemas": {
+            "UserId": {
+                "title": "UserId",
+                "description": "A user id",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+            },
+            "TokenId": {
+                "title": "TokenId",
+                "description": "A token ID",
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 255
+            },
+            "ErrorResponse": {
+                "title": "Error Response",
+                "description": "Response to indicate the operation had an error",
+                "type": "object",
+                "properties": {
+                    "httpStatus": {
+                        "type": "number"
+                    },
+                    "timestamp": {
+                        "type": "number"
+                    },
+                    "status": {
+                        "type": "number"
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "exception": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "stacktrace": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "httpStatus",
+                    "status",
+                    "exception",
+                    "message"
+                ]
+            }
+        }
+    }
+}
+

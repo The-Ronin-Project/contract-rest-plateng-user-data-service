@@ -18,27 +18,13 @@ The project looks like this:
 ├── build.gradle.kts                           Gradle build script
 ├── settings.gradle.kts                        Gradle build settings script
 └── v1
-    └── plateng-user-data-service.json
+    ├── schemas
+    │   └── sub-items.json                     Definitions for each of the sub-components of the API
+    └── plateng-user-data-service.json         Overall definition of the user data service
 ```
-
-Replace [ronin-contract-rest-template.json](v1%2Fronin-contract-rest-template.json) with your OpenAPI spec.  You may break up using references to other local files so long as they are
-contained inside the `v1` directory, but you should put them in sub-folders (e.g. `v1/schemas/<schema-name>.json`).  You should update the `info/version` value of your spec and keep it
-set to a valid semantic version (`-SNAPSHOT` is supported): that version is the version the gradle/maven artifacts will be published under.  There is a utility in the gradle build to maintain
-them for you if you desire.
 
 When it comes time to make a new major version, you will need to create a new `v2` directory and put the new specification in there.
 
-### Dependencies
-
-If your contract depends on _other_ contracts, you can reference them as project dependencies.  Make entries in your build.gradle.kts file like this:
-
-```kotlin
-val v1 by configurations.creating
-
-dependencies {
-    v1("<dependency group id>:<dependency artifact id>:<dependency version>")
-}
-```
 
 When you run the commands described below, these dependencies will be downloaded and placed in the `vN/.dependencies` directory based on the version you declared in your build file.  If they
 are archives, they'll be unzipped, and you can reference the dependent contracts, schemas, etc. directly by path from inside your OpenAPI schema.
