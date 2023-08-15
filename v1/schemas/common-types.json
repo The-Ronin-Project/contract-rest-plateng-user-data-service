@@ -7,9 +7,9 @@
     },
     "components": {
         "schemas": {
-            "UserId": {
-                "title": "UserId",
-                "description": "A user id",
+            "Username": {
+                "title": "Username",
+                "description": "username (case insensitive)",
                 "type": "string",
                 "minLength": 1,
                 "maxLength": 128

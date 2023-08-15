@@ -11,36 +11,43 @@
                 "title": "User",
                 "type": "object",
                 "properties": {
-                    "userId": {
-                        "$ref": "common-types.json#/components/schemas/UserId"
+                    "username": {
+                        "$ref": "common-types.json#/components/schemas/Username"
+                    },
+                    "password": {
+                        "type": "string",
+                        "description": "Generated password is returned if one was not provided in creation request and is never saved server-side"
                     },
                     "createdAt": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "createdBy": {
                         "type": "string"
                     },
                     "updatedAt": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "updatedBy": {
                         "type": "string"
                     },
                     "deletedAt": {
                         "type": "string",
+                        "format": "date-time",
                         "description": "datetime of deletion, or NULL if not deleted"
                     }
                 },
                 "required": [
-                    "userId"
+                    "username"
                 ]
             },
             "CreateUserRequestBody": {
                 "title": "Input structure for creating or updating a User",
                 "type": "object",
                 "properties": {
-                    "userId": {
-                        "$ref": "common-types.json#/components/schemas/UserId"
+                    "username": {
+                        "$ref": "common-types.json#/components/schemas/Username"
                     },
                     "password": {
                         "type": "string",
@@ -49,8 +56,7 @@
                     }
                 },
                 "required": [
-                    "userId",
-                    "password"
+                    "username"
                 ]
             },
             "ListOfUsers": {
