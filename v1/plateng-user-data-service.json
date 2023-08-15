@@ -171,7 +171,7 @@
                 ]
             }
         },
-        "/users/{userId}": {
+        "/users/{username}": {
             "put": {
                 "tags": [
                     "user"
@@ -181,7 +181,7 @@
                 "operationId": "updateUser",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/pathUserId"
+                        "$ref": "#/components/parameters/pathUsername"
                     }
                 ],
                 "requestBody": {
@@ -261,7 +261,7 @@
                 "operationId": "deleteUser",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/pathUserId"
+                        "$ref": "#/components/parameters/pathUsername"
                     }
                 ],
                 "responses": {
@@ -314,7 +314,7 @@
                 "operationId": "getUserById",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/pathUserId"
+                        "$ref": "#/components/parameters/pathUsername"
                     }
                 ],
                 "responses": {
@@ -366,7 +366,7 @@
                 ]
             }
         },
-        "/users/{userId}/credentials": {
+        "/users/{username}/credentials": {
             "get": {
                 "tags": [
                     "user",
@@ -377,7 +377,7 @@
                 "operationId": "getUserCreds",
                 "parameters": [
                     {
-                        "$ref": "#/components/parameters/pathUserId"
+                        "$ref": "#/components/parameters/pathUsername"
                     }
                 ],
                 "responses": {
@@ -674,10 +674,10 @@
             }
         },
         "parameters": {
-            "pathUserId": {
-                "name": "userId",
+            "pathUsername": {
+                "name": "username",
                 "in": "path",
-                "schema": {"$ref": "schemas/common-types.json#/components/schemas/UserId"},
+                "schema": {"$ref": "schemas/common-types.json#/components/schemas/Username"},
                 "example": "interops-example-service-prod",
                 "required": true
             },
