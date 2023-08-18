@@ -112,11 +112,11 @@
                     "user"
                 ],
                 "summary": "List users",
-                "description": "Lists users, optionally filtered by id_contains and is_deleted",
+                "description": "Lists users, optionally filtered by username_contains and is_deleted",
                 "operationId": "getUsers",
                 "parameters": [
                     {
-                        "name": "id_contains",
+                        "name": "username_contains",
                         "in": "query",
                         "required": false,
                         "schema": {
@@ -310,8 +310,8 @@
                     "user"
                 ],
                 "summary": "Get user record",
-                "description": "Gets user record with the given id",
-                "operationId": "getUserById",
+                "description": "Gets user record with the given username",
+                "operationId": "getUserByUsername",
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/pathUsername"
