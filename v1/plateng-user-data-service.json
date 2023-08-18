@@ -112,11 +112,11 @@
                     "user"
                 ],
                 "summary": "List users",
-                "description": "Lists users, optionally filtered by username and is_deleted",
+                "description": "Lists users, optionally filtered by username_contains and is_deleted",
                 "operationId": "getUsers",
                 "parameters": [
                     {
-                        "name": "username",
+                        "name": "username_contains",
                         "in": "query",
                         "required": false,
                         "schema": {
