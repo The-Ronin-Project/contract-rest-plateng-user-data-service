@@ -101,9 +101,7 @@
                         }
                     }
                 },
-                "security": [
-                    {}
-                ]
+                "security": [{"seki": []}]
             },
             "get": {
                 "tags": [
@@ -162,9 +160,7 @@
                         }
                     }
                 },
-                "security": [
-                    {}
-                ]
+                "security": [{"seki": []}]
             }
         },
         "/users/{username}": {
@@ -242,9 +238,7 @@
                         }
                     }
                 },
-                "security": [
-                    {}
-                ]
+                "security": [{"seki": []}]
             },
             "delete": {
                 "tags": [
@@ -293,9 +287,7 @@
                         }
                     }
                 },
-                "security": [
-                    {}
-                ]
+                "security": [{"seki": []}]
             },
             "get": {
                 "tags": [
@@ -351,9 +343,7 @@
                         }
                     }
                 },
-                "security": [
-                    {}
-                ]
+                "security": [{"seki": []}]
             }
         },
         "/users/{username}/credentials": {
@@ -413,7 +403,9 @@
                     }
                 },
                 "security": [
-                    {}
+                    {
+                        "auth0": []
+                    }
                 ]
             }
         },
@@ -655,6 +647,11 @@
     },
     "components": {
         "securitySchemes": {
+            "seki": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            },
             "auth0": {
                 "type": "http",
                 "scheme": "bearer",
